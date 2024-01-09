@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>File Upload</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      margin: 20px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      color: rgb(60, 60, 60);
+    }
+
+    .container h1 {
+      font-weight: normal;
+    }
+
+    .container1 {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+
+    }
+
+    SECTION>DIV {
+      float: left;
+      padding: 4px;
+    }
+
+    SECTION>DIV+DIV {
+      width: 40px;
+      text-align: center;
+    }
+
+    SELECT,
+    INPUT[type="text"] {
+      width: 160px;
+      box-sizing: border-box;
+    }
+
+    .block-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 100%;
+      margin-right: 20px;
+    }
+
+
+label[for="file"] {
+  padding: 40px;
+  color: #fff;
+  cursor: pointer;
+}
+
+    .block {
+      width: 45%;
+      padding: 20px;
+      margin: 5px;
+      box-shadow: 0 0 5px rgba(2, 2, 2, 0.1);
+      font-size: 20px;
+
+    }
+
+    .block p{
+      margin-left: 80px;
+      font-weight: normal;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      margin-left: 80px;
+    }
+
+    .form-group label {
+      margin-right: 10px;
+      font-weight: normal;
+    }
+    .form-group select{
+      margin-left: 20px;
+}
+
+    .block1 {
+      width: 100%;
+      padding: 20px;
+      margin: 5px;
+      box-shadow: 0 0 5px rgba(2, 2, 2, 0.1);
+      font-size: 20px;
+      font-weight: normal;
+
+    }
+
+    .block1 p{
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      margin-left: 80px;
+    }
+
+    .block1 section{
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      margin-left: 80px;
+    }
+    .button-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+    }
+
+    .next-button,
+    .cancel-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .next-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      margin-right: 10px;
+    }
+
+    .cancel-button {
+      color: red;
+      border: none;
+      background-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Import Products<h1>
+        <div class="block-container">
+          <div class="block">
+            <h3>Step 1: Select File:</h3>
+            <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
+              <label for="file"></label>
+              <input type="file" name="file" id="file" class="file-input">
+              <p>Supported File Type(S) : .CSV, .JSON</p>
+            </form>
+          </div>
+          
+          <div class="block">
+            <h3>Step 2: Specify Format</h3>
+            <div class="form-group">
+              <label for="fileType">File type:</label>
+              <select id="fileType" name="fileType">
+                <option value="CSV">csv</option>
+                <option value="JSON">JSON</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="charEncoding">Character encoding:</label>
+              <select id="charEncoding" name="charEncoding">
+                <option value="UTF-8">UTF-8</option>
+                <option value="ISO-8859-1">ISO-8859-1</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="delimiter">Select delimiter:</label>
+              <select id="delimiter" name="delimiter">
+                <option value=",">Comma (,)</option>
+                <option value=";">Semicolon (;)</option>
+                <option value="|">Pipe (|)</option>
+                <option value="tab">Tab</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <input type="checkbox" id="step3Checkbox" name="step3Checkbox">
+              <label for="step3Checkbox">Has Header</label>
+            </div>
+          </div>
+          <div class="block1">
+            <h3>
+              <input type="checkbox" id="headerCheckbox"> Step 3: Display Handling
+            </h3>
+            <p>Select the fields to be displayed </p>
+            <form action="/select-details" method="post">
+
+              <section>
+                <div class="container">
+                  <select id="leftValues" size="9" multiple>
+                    <option value="id">ID</option>
+                    <option value="subCategory">Sub Category</option>
+                    <option value="title">Title</option>
+                    <option value="price">Price</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="description">Description</option>
+                    <option value="rating">Rating</option>
+                    <option value="UTMsource">UTM Source</option>
+                    <option value="UTMmedium">UTM Medium</option>
+
+
+                  </select>
+                </div>
+                <div class="container1">
+                  <input type="button" id="btnLeft" value="&lt;&lt;" />
+                  <input type="button" id="btnRight" value="&gt;&gt;" />
+                </div>
+                <div class="container2">
+                  <select id="rightValues" size="9" multiple>
+                  </select>
+
+                </div>
+              </section>
+            </form>
+          </div>
+        </div>
+  </div>
+  <div class="button-container">
+    <button class="next-button" id="nextButton">Next</button>
+    <button class="cancel-button">Cancel</button>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#btnLeft").click(function () {
+        var selectedItem = $("#rightValues option:selected");
+        $("#leftValues").append(selectedItem);
+      });
+
+      $("#btnRight").click(function () {
+        var selectedItem = $("#leftValues option:selected");
+        $("#rightValues").append(selectedItem);
+      });
+
+      $("#nextButton").click(function () {
+      var selectedFields = $("#rightValues").val();
+
+      if (selectedFields && selectedFields.length > 0) {
+        // Get the file type selected in Step 2
+        var fileType = $("input[name='fileType']:checked").val();
+
+        // Perform actions based on file type (CSV or JSON)
+        if (fileType === 'csv') {
+          // Assuming CSV data is already loaded, replace the sample data below
+          var csvData = `id,subCategory,title,price,popularity,description,rating,UTMsource,UTMmedium
+1,Category1,Product1,50,100,Description1,4,source1,medium1
+2,Category2,Product2,30,80,Description2,5,source2,medium2
+3,Category1,Product3,20,120,Description3,3,source3,medium3`;
+          
+          // Convert CSV data to JSON
+          var jsonData = csvToJSON(csvData);
+
+          // Display the table
+          displayTable(jsonData, selectedFields);
+        } else if (fileType === 'json') {
+          // Assuming JSON data is already loaded, replace the sample data below
+          var jsonData = [
+            { "id": 1, "subCategory": "Category1", "title": "Product1", "price": 50, "popularity": 100, "description": "Description1", "rating": 4, "UTMsource": "source1", "UTMmedium": "medium1" },
+            { "id": 2, "subCategory": "Category2", "title": "Product2", "price": 30, "popularity": 80, "description": "Description2", "rating": 5, "UTMsource": "source2", "UTMmedium": "medium2" },
+            { "id": 3, "subCategory": "Category1", "title": "Product3", "price": 20, "popularity": 120, "description": "Description3", "rating": 3, "UTMsource": "source3", "UTMmedium": "medium3" }
+          ];
+
+          // Display the table
+          displayTable(jsonData, selectedFields);
+        }
+      } else {
+        alert("Please select at least one field before clicking Next.");
+      }
+    });
+
+    function csvToJSON(csv) {
+      var lines = csv.split("\n");
+      var result = [];
+      var headers = lines[0].split(",");
+
+      for (var i = 1; i < lines.length; i++) {
+        var obj = {};
+        var currentline = lines[i].split(",");
+
+        for (var j = 0; j < headers.length; j++) {
+          obj[headers[j]] = currentline[j];
+        }
+
+        result.push(obj);
+      }
+
+      return result;
+    }
+
+    function displayTable(data, selectedFields) {
+      var table = "<table border='1'>";
+
+      table += "<tr>";
+      selectedFields.forEach(function (field) {
+        table += "<th>" + field + "</th>";
+      });
+      table += "</tr>";
+
+      data.forEach(function (row) {
+        table += "<tr>";
+        selectedFields.forEach(function (field) {
+          table += "<td>" + row[field] + "</td>";
+        });
+        table += "</tr>";
+      });
+
+      table += "</table>";
+
+      $(".container").html(table);
+    }
+  });
+  </script>
+</body>
+
+</html>
